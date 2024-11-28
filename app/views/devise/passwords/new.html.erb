@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <h2 class="text-center" style="color: #1f196c;">Забули свій пароль?</h2>
+
+  <div class="d-flex justify-content-center mt-4">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "w-50" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group">
+        <%= f.label :email, "Email", class: "form-label", style: "color: #1f196c;" %>
+        <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4">
+        <%= f.submit "Надіслати інструкції скидання паролю", class: "btn", style: "border: 2px solid #6b188c; color: #6b188c; transition: all 0.3s;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
+
+<style>
+  .btn:hover {
+    background-color: white !important;
+    color: #6b188c !important;
+  }
+</style>

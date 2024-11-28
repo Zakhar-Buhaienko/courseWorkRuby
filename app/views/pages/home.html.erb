@@ -1,0 +1,14 @@
+<h2>Ласкаво просимо на наш сайт!</h2>
+<p>Тут ви знайдете найкращі товари за вигідними цінами.</p>
+
+<div class="product-list">
+  <% @products.each do |product| %>
+    <div class="card">
+      <img src="<%= product.image_url %>" alt="<%= product.name %>">
+      <h3><%= product.name %></h3>
+      <p><%= product.description %></p>
+      <p>Ціна: <%= product.price %> грн</p>
+      <%= link_to 'Додати в кошик', add_item_cart_path(product), method: :post %>
+    </div>
+  <% end %>
+</div>

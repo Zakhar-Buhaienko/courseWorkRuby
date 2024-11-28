@@ -1,0 +1,35 @@
+<h2 class="text-center" style="color: #1f196c;">Увійти</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'p-4 rounded', style: 'background-color: #daf4ce;' }) do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, "Електронна пошта", style: 'color: #1f196c;' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, "Пароль", style: 'color: #1f196c;' %>
+    <%= f.password_field :password, autocomplete: "current-password", class: 'form-control' %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-check mb-3">
+      <%= f.check_box :remember_me, class: 'form-check-input', id: 'remember_me' %>
+      <%= f.label :remember_me, "Запам'ятати мене", class: 'form-check-label', for: 'remember_me', style: 'color: #1f196c;' %>
+    </div>
+  <% end %>
+
+  <div class="d-flex justify-content-center">
+    <%= f.submit "Увійти", class: 'btn', style: 'border: 2px solid #6b188c; color: #6b188c; transition: all 0.3s;' %>
+  </div>
+<% end %>
+
+<div class="d-flex justify-content-center mt-3">
+  <%= render "devise/shared/links" %>
+</div>
+
+<style>
+  .btn:hover {
+    background-color: white !important;
+    color: inherit !important;
+  }
+</style>

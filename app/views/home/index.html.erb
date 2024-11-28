@@ -1,0 +1,46 @@
+<h1>Ласкаво просимо до нашого магазину!</h1>
+
+<div class="slider">
+  <h2>Акційні товари</h2>
+  <div class="products">
+    <% @featured_products.each do |product| %>
+      <div class="product">
+        <%= image_tag product.image if product.image.attached? %>
+        <h3><%= product.name %></h3>
+        <p><%= number_to_currency(product.price) %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <h2>Нові товари</h2>
+  <div class="products">
+    <% @new_products.each do |product| %>
+      <div class="product">
+        <%= image_tag product.image if product.image.attached? %>
+        <h3><%= product.name %></h3>
+        <p><%= number_to_currency(product.price) %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <h2>Популярні товари</h2>
+  <div class="products">
+    <% @popular_products.each do |product| %>
+      <div class="product">
+        <%= image_tag product.image if product.image.attached? %>
+        <h3><%= product.name %></h3>
+        <p><%= number_to_currency(product.price) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<section>
+  <h2>Про нас</h2>
+  <p>Ми пропонуємо найкращі товари за найвигіднішими цінами. Наші переваги:</p>
+  <ul>
+    <li>Висока якість продукції</li>
+    <li>Швидка доставка</li>
+    <li>Вигідні ціни</li>
+  </ul>
+</section>

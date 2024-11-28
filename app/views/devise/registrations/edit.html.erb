@@ -1,0 +1,59 @@
+<h2 class="text-center" style="color: #1f196c;">Редагувати профіль</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'p-4 rounded', style: 'background-color: #daf4ce;' }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="mb-3">
+    <%= f.label :email, "Електронна пошта", style: 'color: #1f196c;' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div class="mb-3 alert alert-info">
+      Зараз очікується підтвердження для: <%= resource.unconfirmed_email %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :password, "Новий пароль", style: 'color: #1f196c;' %> 
+    <small class="form-text text-muted">(залиште порожнім, якщо не хочете змінювати)</small>
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+    <% if @minimum_password_length %>
+      <small class="form-text text-muted">
+        Мінімум символів: <%= @minimum_password_length %>
+      </small>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "Підтвердження нового пароля", style: 'color: #1f196c;' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :current_password, "Поточний пароль", style: 'color: #1f196c;' %> 
+    <small class="form-text text-muted">(необхідно для підтвердження змін)</small>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <%= f.submit "Оновити", class: 'btn', style: 'border: 2px solid #6b188c; color: #6b188c; transition: all 0.3s;' %>
+  </div>
+<% end %>
+
+<h3 class="mt-5 text-center" style="color: #1f196c;">Скасувати обліковий запис</h3>
+
+<div class="d-flex justify-content-center mb-4">
+  <%= button_to "Скасувати обліковий запис", registration_path(resource_name), data: { confirm: "Ви впевнені?" }, method: :delete, class: 'btn', style: 'border: 2px solid #d9534f; color: #d9534f; transition: all 0.3s;' %>
+</div>
+
+<div class="d-flex justify-content-center">
+  <%= link_to "Назад", :back, class: 'btn', style: 'border: 2px solid #8918db; color: #8918db; transition: all 0.3s;' %>
+</div>
+
+<style>
+  .btn:hover {
+    background-color: white !important;
+    color: inherit !important;
+  }
+</style>
