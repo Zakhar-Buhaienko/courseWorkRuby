@@ -1,37 +1,57 @@
-<h1>Корзина</h1>
+<div class="container my-5">
+  <!-- Заголовок -->
+  <h1 class="text-center mb-4" style="color: #6b188c;">Корзина</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Назва</th>
-      <th>Кількість</th>
-      <th>Ціна</th>
-      <th>Видалити</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cart_items.each do |item| %>
+  <!-- Таблиця -->
+  <table class="table table-bordered text-center">
+    <thead style="background-color: #6b188c; color: #fff;">
       <tr>
-        <td><%= item.product.name %></td>
-        <td><%= item.quantity %></td>
-        <td><%= number_to_currency(item.product.price * item.quantity) %></td>
-        <td><%= link_to 'Видалити', remove_item_cart_path(item), method: :delete, data: { confirm: 'Ви впевнені?' } %></td>
+        <th>Назва</th>
+        <th>Кількість</th>
+        <th>Ціна</th>
+        <th>Передумали?</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |item| %>
+        <tr>
+          <!-- Стовпець із назвою -->
+          <td style="color: #1f196c;"><%= item.product.name %></td>
 
-<p>Загальна сума: <%= number_to_currency(@cart_items.sum { |item| item.product.price * item.quantity }) %></p>
+          <!-- Стовпець із кількістю -->
+          <td style="color: #1f196c;"><%= item.quantity %></td>
 
-<%= link_to 'Оформити замовлення', new_order_path, class: 'btn btn-primary' %>
-<%= link_to 'Продовжити покупки', products_path, class: 'btn btn-secondary' %>
+          <!-- Стовпець із ціною -->
+          <td style="color: #2ca02c;">
+            <%= number_to_currency(item.product.price * item.quantity, unit: " грн", format: "%n %u") %>
+          </td>
 
-<h3>Оберіть доставку</h3>
-<%= form_with(url: cart_select_delivery_path, method: :patch, local: true) do |form| %>
-  <div class="form-group">
-    <%= form.collection_select :delivery_option_id, DeliveryOption.all, :id, :name, include_blank: 'Оберіть спосіб доставки', class: 'form-control' %>
+          <!-- Стовпець із кнопкою видалення -->
+          <td>
+            <%= button_to 'Видалити', remove_item_cart_path(item), method: :delete, 
+                           class: 'btn btn-sm', 
+                           style: "background-color: #8918db; color: #fff; border-color: #8918db;", 
+                           data: { confirm: 'Ви впевнені?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <!-- Загальна сума -->
+  <p class="text-end fs-5 fw-bold" style="color: #1f196c;">
+    Загальна сума: 
+    <span style="color: #2ca02c;">
+      <%= number_to_currency(@cart_items.sum { |item| item.product.price * item.quantity }, format: "%n грн") %>
+    </span>
+  </p>
+
+  <!-- Кнопки дій -->
+  <div class="d-flex justify-content-between my-4">
+    <%= link_to 'Оформити замовлення', new_order_path, 
+                class: 'btn', 
+                style: "background-color: #6b188c; color: #fff; border-color: #6b188c;" %>
+    <%= link_to 'Продовжити покупки', products_path, 
+                class: 'btn', 
+                style: "background-color: #8918db; color: #fff; border-color: #8918db;" %>
   </div>
-  <%= form.submit 'Оновити доставку', class: 'btn btn-primary' %>
-<% end %>
-<%= button_to 'Оплатити', checkout_path, method: :post, class: 'btn btn-success' %>
-

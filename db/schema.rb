@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_29_103352) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_29_212959) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,18 +42,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_103352) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "product_id", null: false
-    t.integer "quantity"
+    t.integer "delivery_option_id", default: 1, null: false
+    t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
-    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "delivery_option_id", null: false
+    t.integer "delivery_option_id", default: 1, null: false
     t.index ["delivery_option_id"], name: "index_carts_on_delivery_option_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
@@ -72,6 +71,33 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_103352) do
     t.string "delivery_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.text "address"
+    t.integer "delivery_option_id", null: false
+    t.string "payment_option"
+    t.decimal "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_option_id"], name: "index_orders_on_delivery_option_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -117,9 +143,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_103352) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "delivery_options"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "delivery_options"
-  add_foreign_key "carts", "users", on_delete: :cascade
+  add_foreign_key "carts", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "delivery_options"
+  add_foreign_key "orders", "users"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end

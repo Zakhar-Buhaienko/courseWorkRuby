@@ -3,28 +3,34 @@ require 'open-uri'
 # Очищення бази даних
 # Order.destroy_all # якщо є таблиця замовлень, яка посилається на продукти чи користувачів
 # DeliveryOption.destroy_all # очищаємо залежності
-User.destroy_all
+Order.destroy_all if defined?(Order)
+CartItem.destroy_all if defined?(CartItem)
+DeliveryOption.destroy_all if defined?(DeliveryOption)
 Product.destroy_all
+User.destroy_all
 
 # Створення тестових користувачів
 admin = User.create!(
   email: 'admin@example.com',
   password: 'admin1',
   password_confirmation: 'admin1',
-  admin: true
+  admin: true,
+  name: 'Admin'
 )
 
 regular_user = User.create!(
   email: 'user@example.com',
   password: 'password',
   password_confirmation: 'password',
-  admin: false
+  admin: false,
+  name: 'DefaultUser'
 )
 regular_user = User.create!(
   email: 'zakhar.buhaienko-ip213@nung.edu.ua',
   password: 'password',
   password_confirmation: 'password',
-  admin: false
+  admin: false,
+  name: 'Zakhar'
 )
 
 puts "Створено користувачів: #{User.count}"
@@ -64,10 +70,8 @@ products.each do |product_data|
 end
 
 end
-puts "Створено продуктів: #{product.count}"
 
 DeliveryOption.create!([
-  { name: 'Стандартна доставка', price: 10.0 },
-  { name: 'Експрес-доставка', price: 25.0 },
-  { name: 'Доставка кур’єром', price: 15.0 }
+  { name: 'Доставка кур’єром', cost: 15.0, delivery_time: 'Протягом дня' },
+  { name: 'Експрес-доставка кур’єром', cost: 35.0, delivery_time: 'Протягом години' }
 ])

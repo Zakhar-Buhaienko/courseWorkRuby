@@ -1,16 +1,16 @@
 <h1 class="text-center mt-4" style="color: #1f196c;">Ласкаво просимо до нашого магазину!</h1>
 
-<!-- Слайдер "Акційні товари" -->
+<!-- Слайдер "Популярні товари" -->
 <% if @new_products.present? %>
   <div id="featuredProductsCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000">
-  <h2 class="text-center mb-3" style="color: #6b188c;">Акційні товари</h2>
+  <h2 class="text-center mb-3" style="color: #6b188c;">Популярні товари</h2>
   <div class="carousel-inner" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden;">
     <% @new_products.each_with_index do |product, index| %>
       <div class="carousel-item <%= 'active' if index == 0 %>">
         <div class="d-flex flex-column align-items-center p-4" style="background-color: #daf4ce;">
           <%= image_tag(product.image, class: "d-block", style: "width: 300px; height: 300px; object-fit: cover; border: 3px solid #6b188c; border-radius: 8px;") if product.image.attached? %>
           <h3 class="mt-3 text-center" style="color: #1f196c;"><%= product.name %></h3>
-          <p class="text-center" style="color: #6b188c; font-weight: bold;"><%= number_to_currency(product.price) %></p>
+          <p class="text-center" style="color: #6b188c; font-weight: bold;"><%= number_to_currency(product.price, format: "%n грн") %></p>
           <%= link_to 'Переглянути товар', product_path(product), class: "btn btn-primary mt-2", style: "background-color: #6b188c; border-color: #6b188c;" %>
         </div>
       </div>

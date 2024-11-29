@@ -2,6 +2,10 @@ class PaymentsController < ApplicationController
   def create
       Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
   
+      if @cart.nil?
+        redirect_to cart_path, alert: 'Your cart is empty!' and return
+      end
+
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: @cart.cart_items.map do |item|

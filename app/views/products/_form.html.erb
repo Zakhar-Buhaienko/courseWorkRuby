@@ -29,13 +29,7 @@
       <%= form.label :stock, 'Кількість на складі' %>
       <%= form.number_field :stock, class: 'form-control' %>
     </div>
-  
-    <%= form.label :image, 'Зображення' %>
-    <%= form.file_field :image, class: 'form-control' %>
-    <% if @product.image.attached? %>
-    <p>Поточне зображення:</p>
-    <%= image_tag @product.image.variant(resize_to_limit: [200, 200]), class: 'img-thumbnail' %>
-    <% end %>
+
 
   
     <div class="actions">

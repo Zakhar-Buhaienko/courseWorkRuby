@@ -1,0 +1,49 @@
+<div class="container my-5 p-4" style="background-color: #daf4ce; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <h1 class="mb-4" style="color: #6b188c;">Деталі замовлення</h1>
+  
+  <div class="mb-4">
+    <h3 style="color: #8918db;">Особиста інформація</h3>
+    <p><strong>Ім'я:</strong> <%= @order.name %></p>
+    <p><strong>Email:</strong> <%= @order.email %></p>
+    <p><strong>Телефон:</strong> <%= @order.phone %></p>
+    <p><strong>Адреса:</strong> <%= @order.address %></p>
+  </div>
+
+  <div class="mb-4">
+    <h3 style="color: #8918db;">Інформація про доставку</h3>
+    <p><strong>Спосіб доставки:</strong> <%= @order.delivery_option&.name %></p>
+    <p><strong>Метод оплати:</strong> <%= @order.payment_option %></p>
+  </div>
+
+  <div class="mb-4">
+    <h3 style="color: #8918db;">Загальна сума</h3>
+    <p><strong>Сума замовлення:</strong> <%= number_to_currency(@order.total_price) %></p>
+  </div>
+
+  <h3 style="color: #8918db;">Товари в замовленні</h3>
+  <table class="table table-bordered mt-3" style="background-color: white;">
+    <thead class="thead-dark">
+      <tr style="background-color: #6b188c; color: white;">
+        <th>Назва</th>
+        <th>Кількість</th>
+        <th>Ціна</th>
+        <th>Загальна вартість</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_to_currency(item.price) %></td>
+          <td><%= number_to_currency(item.price * item.quantity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+   
+  <div class="text-center mt-4">
+    <a href="<%= edit_user_registration_path %>" class="btn btn-primary mx-2 px-4 py-2 rounded-pill" style="background-color: #6b188c; border-color: #8918db;">Повернутися до профілю</a>
+    <a href="<%= root_path %>" class="btn btn-primary mx-2 px-4 py-2 rounded-pill" style="background-color: #6b188c; border-color: #8918db;">Повернутися до головної</a>
+  </div>
+</div>

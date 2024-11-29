@@ -5,6 +5,7 @@ body {
   
   a {
     color: #6b188c;
+    text-align: center;
   }
   
   a:hover {
@@ -39,5 +40,45 @@ body {
     width: 300px;
     height: 300px;
     object-fit: cover;
+  }
+  .product-btn {
+    border: 2px solid #6b188c; 
+    background-color: transparent;
+    color: #6b188c;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease, font-weight 0.3s ease;
+    width: 100%; /* Займає всю ширину контейнера */
+  }
+
+  .product-btn:hover {
+    background-color: #6b188c;
+    color: white;
+    font-weight: bold; /* Робить текст жирним */
+  }
+
+  .product-btn:active {
+    background-color: #8918db;
+    color: white;
+  }
+
+  .product-btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-product-btn {
+    border: 2px solid #8918db;
+    color: #8918db;
+    width: auto; /* Для кнопки додавання товару не застосовується 100% ширини */
+  }
+
+  .add-product-btn:hover {
+    background-color: #8918db;
+    color: white;
+    font-weight: bold; /* Робить текст жирним */
   }
   

@@ -1,0 +1,67 @@
+<div class="container my-5">
+  <!-- Заголовок -->
+  <h1 class="text-center mb-4" style="color: #6b188c;">Оформлення замовлення</h1>
+  <div class="row">
+    <!-- Форма введення даних -->
+    <div class="col-md-8">
+      <%= form_with model: @order, url: orders_path, local: true, class: "needs-validation" do |f| %>
+        <div class="mb-3">
+          <%= f.label :name, "Ім'я та прізвище", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Ваше ім'я та прізвище", style: "border-color: #6b188c;", required: true %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :email, "Електронна пошта", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.email_field :email, class: "form-control", placeholder: "example@gmail.com", style: "border-color: #6b188c;", required: true %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :phone, "Телефон", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.telephone_field :phone, class: "form-control", placeholder: "+380123456789", style: "border-color: #6b188c;", required: true %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :address, "Адреса доставки", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.text_area :address, class: "form-control", rows: 3, placeholder: "Вулиця, будинок, квартира", style: "border-color: #6b188c;", required: true %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :delivery_option_id, "Спосіб доставки", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.collection_select :delivery_option_id, DeliveryOption.all, :id, :name, { prompt: "Оберіть варіант доставки" }, { class: "form-select", style: "border-color: #6b188c;", required: true } %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :payment_option, "Спосіб оплати", class: "form-label", style: "color: #1f196c;" %>
+          <%= f.select :payment_option, [["Оплата карткою", "card"], ["Готівкою при отриманні", "cash"]], { prompt: "Оберіть спосіб оплати" }, { class: "form-select", style: "border-color: #6b188c;", required: true } %>
+        </div>
+        <%= f.submit "Підтвердити замовлення", class: "btn w-100", style: "background-color: #6b188c; color: #fff; border-color: #6b188c;" %>
+      <% end %>
+    </div>
+
+    <!-- Огляд замовлення -->
+    <div class="col-md-4">
+      <div class="card" style="border-color: #6b188c;">
+        <div class="card-header text-center" style="background-color: #6b188c; color: #fff;">
+          Ваше замовлення
+        </div>
+        <div class="card-body">
+          <% if @cart.cart_items.any? %>
+            <ul class="list-group mb-3">
+              <% @cart.cart_items.each do |item| %>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #1f196c;">
+                  <%= item.product.name %>
+                  <span style="color: #2ca02c;">
+                    <%= number_to_currency(item.product.price * item.quantity, format: "%n грн") %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+            <p class="text-end fw-bold" style="color: #1f196c;">
+              Загальна сума: 
+              <span style="color: #2ca02c;">
+                <%= number_to_currency(@cart.cart_items.sum { |item| item.product.price * item.quantity }, unit: " грн", format: "%n %u") %>
+              </span>
+            </p>
+          <% else %>
+            <p class="text-center" style="color: #1f196c;">Кошик порожній</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

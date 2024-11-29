@@ -1,3 +1,28 @@
+<div class="container my-5 p-4" style="background-color: #daf4ce; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <h1 class="mb-4" style="color: #6b188c;">Ваш профіль</h1>
+  
+  <div class="mb-4">
+    <p><strong>Ім'я:</strong> <%= current_user.name %></p>
+    <p><strong>Email:</strong> <%= current_user.email %></p>
+  </div>
+
+  <div class="mb-4">
+    <h3 style="color: #8918db;">Ваші замовлення</h3>
+    <% if current_user.orders.any? %>
+      <ul class="list-group">
+        <% current_user.orders.each do |order| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Замовлення №<%= order.id %> — <%= number_to_currency(order.total_price) %>
+            <a href="<%= order_path(order) %>" class="btn btn-sm btn-primary" style="background-color: #6b188c; border-color: #8918db;">Переглянути</a>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p style="color: #1f196c;">У вас ще немає замовлень.</p>
+    <% end %>
+  </div>
+</div>
+
 <h2 class="text-center" style="color: #1f196c;">Редагувати профіль</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'p-4 rounded', style: 'background-color: #daf4ce;' }) do |f| %>
@@ -13,6 +38,12 @@
       Зараз очікується підтвердження для: <%= resource.unconfirmed_email %>
     </div>
   <% end %>
+  
+  <div class="mb-3">
+    <%= f.label :name, "Ім'я", style: 'color: #1f196c;' %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', placeholder: "Ваше ім'я" %>
+  </div>
+
 
   <div class="mb-3">
     <%= f.label :password, "Новий пароль", style: 'color: #1f196c;' %> 
