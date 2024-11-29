@@ -9,6 +9,7 @@ body {
   
   a:hover {
     color: #8918db;
+    font-weight: bold;
   }
   
   .navbar, footer {
@@ -22,6 +23,7 @@ body {
   
   .navbar a:hover, footer a:hover {
     color: #8918db;
+
   }
   
   .card {
@@ -31,5 +33,11 @@ body {
   
   .card-title, .card-text {
     color: #1f196c;
+  }
+  
+  .carousel .carousel-item img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
   }
   

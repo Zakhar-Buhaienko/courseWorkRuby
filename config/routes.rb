@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   resources :products
   
-  root "products#index"
+  root "home#index"
 
   resource :cart, only: %i[show] do
     post 'add_item', to: 'carts#add_item'

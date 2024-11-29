@@ -1,30 +1,53 @@
-<h1><%= @product.name %></h1>
+<div class="container mt-5">
+  <div class="card" style="background-color: #daf4ce; border-color: #6b188c;">
+    <div class="card-body">
+      <h1 class="card-title" style="color: #6b188c;"><%= @product.name %></h1>
+      <div class="text-center my-3">
+        <%= image_tag @product.image, 
+          class: 'img-fluid', 
+          style: "width: 100%; max-width: 800px; height: auto; border: 1px solid #6b188c; padding: 10px;" if @product.image.attached? %>
+      </div>
 
-<p><strong>Опис:</strong> <%= @product.description %></p>
-<p><strong>Ціна:</strong> <%= number_to_currency(@product.price) %></p>
-<p><strong>Кількість:</strong> <%= @product.stock %></p>
-<%= image_tag @product.image if @product.image.attached? %>
 
-<%= link_to 'Редагувати', edit_product_path(@product), class: 'btn btn-warning' %>
-<%= link_to 'Повернутися до списку', products_path, class: 'btn btn-secondary' %>
+      <p class="card-text" style="color: #1f196c;">
+        <strong>Опис:</strong> <%= @product.description %>
+      </p>
+      <p class="card-text" style="color: #1f196c;">
+        <strong>Ціна:</strong> <%= number_to_currency(@product.price) %>
+      </p>
+      <p class="card-text" style="color: #1f196c;">
+        <strong>Кількість:</strong> <%= @product.stock %>
+      </p>
+      <div class="d-flex justify-content-between mt-4">
+        <% if user_signed_in? && current_user.admin? %>
+          <%= link_to 'Редагувати', edit_product_path(@product), class: 'btn', style: "background-color: #8918db; color: #fff;" %>
 
-<h2>Відгуки</h2>
-
-<%= render @product.reviews %>
-
-<% if user_signed_in? %>
-  <h3>Залишити відгук</h3>
-  <%= form_with(model: [@product, Review.new], local: true) do |form| %>
-    <div class="form-group">
-      <%= form.label :rating, 'Оцінка (1-5)' %>
-      <%= form.number_field :rating, in: 1..5, class: 'form-control' %>
+        <% end %>
+        <%= link_to 'Повернутися до списку', products_path, class: 'btn', style:"background-color: #6b188c; color: #fff;" %>
+      </div>
     </div>
-    <div class="form-group">
-      <%= form.label :content, 'Ваш відгук' %>
-      <%= form.text_area :content, class: 'form-control' %>
+  </div>
+
+  <div class="mt-5">
+    <h2 class="text-center" style="color: #6b188c;">Відгуки</h2>
+    <div>
+      <%= render @product.reviews %>
     </div>
-    <%= form.submit 'Відправити', class: 'btn btn-primary' %>
-  <% end %>
-<% else %>
-  <p><%= link_to 'Увійдіть', new_user_session_path %>, щоб залишити відгук.</p>
-<% end %>
+    <% if user_signed_in? %>
+      <h3 style="color: #1f196c;">Залишити відгук</h3>
+      <%= form_with(model: [@product, Review.new], local: true) do |form| %>
+        <div class="form-group">
+          <%= form.label :rating, 'Оцінка (1-5)', class: 'form-label', style: "color: #1f196c;" %>
+          <%= form.number_field :rating, in: 1..5, class: 'form-control', style: "border-color: #6b188c;" %>
+        </div>
+        <div class="form-group">
+          <%= form.label :content, 'Ваш відгук', class: 'form-label', style: "color: #1f196c;" %>
+          <%= form.text_area :content, class: 'form-control', style: "border-color: #6b188c;" %>
+        </div>
+        <%= form.submit 'Відправити', class: 'btn mt-3', style: "background-color: #8918db; color: #fff;" %>
+      <% end %>
+    <% else %>
+      <p><%= link_to 'Увійдіть', new_user_session_path, style: "color: #6b188c;" %>, щоб залишити відгук.</p>
+    <% end %>
+  </div>
+</div>

@@ -31,8 +31,11 @@ puts "Створено користувачів: #{User.count}"
 
 # Шлях до локальних зображень
 image_path = Rails.root.join('db/seeds/images')
-
+sleep(0.1)
 # Створення продуктів
+ActiveRecord::Base.transaction do
+
+
 products = [
   { name: 'Хліб', description: 'Свіжий хліб із пекарні', price: 20, stock: 50, image_file: 'Хліб.jpeg' },
   { name: 'Баранина', description: 'Баран', price: 30, stock: 100, image_file: 'Баранина.jpeg' },
@@ -60,32 +63,8 @@ products.each do |product_data|
   )
 end
 
-puts "Створено продукти: #{Product.count}"
-
-# Створення напоїв
-drinks = [
-  { name: 'Молоко', description: 'Moloko, 200 мл', price: 25, stock: 40, image_file: 'Молоко.jpeg' },
-  { name: 'Чай', description: 'Чай зелений, 200 мл', price: 20, stock: 50, image_file: 'tea.jpeg' },
-  { name: 'Сік', description: 'Апельсиновий сік, 300 мл', price: 35, stock: 30, image_file: 'juice.jpeg' },
-  { name: 'Вода', description: 'Мінеральна вода, 500 мл', price: 15, stock: 100, image_file: 'Вода.jpeg' },
-  { name: 'Лимонад', description: 'Домашній лимонад, 300 мл', price: 40, stock: 25, image_file: 'lemonade.jpeg' }
-]
-
-drinks.each do |drink_data|
-  drink = Product.create!(
-    name: drink_data[:name],
-    description: drink_data[:description],
-    price: drink_data[:price],
-    stock: drink_data[:stock]
-  )
-  drink.image.attach(
-    io: File.open(image_path.join(drink_data[:image_file])),
-    filename: drink_data[:image_file],
-    content_type: 'image/jpeg'
-  )
 end
-
-puts "Створено напої: #{Product.count - products.size}"
+puts "Створено продуктів: #{product.count}"
 
 DeliveryOption.create!([
   { name: 'Стандартна доставка', price: 10.0 },

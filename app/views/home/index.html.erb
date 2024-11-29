@@ -1,44 +1,46 @@
-<h1>Ласкаво просимо до нашого магазину!</h1>
+<h1 class="text-center mt-4" style="color: #1f196c;">Ласкаво просимо до нашого магазину!</h1>
 
-<div class="slider">
-  <h2>Акційні товари</h2>
-  <div class="products">
-    <% @featured_products.each do |product| %>
-      <div class="product">
-        <%= image_tag product.image if product.image.attached? %>
-        <h3><%= product.name %></h3>
-        <p><%= number_to_currency(product.price) %></p>
+<!-- Слайдер "Акційні товари" -->
+<% if @new_products.present? %>
+  <div id="featuredProductsCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000">
+  <h2 class="text-center mb-3" style="color: #6b188c;">Акційні товари</h2>
+  <div class="carousel-inner" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden;">
+    <% @new_products.each_with_index do |product, index| %>
+      <div class="carousel-item <%= 'active' if index == 0 %>">
+        <div class="d-flex flex-column align-items-center p-4" style="background-color: #daf4ce;">
+          <%= image_tag(product.image, class: "d-block", style: "width: 300px; height: 300px; object-fit: cover; border: 3px solid #6b188c; border-radius: 8px;") if product.image.attached? %>
+          <h3 class="mt-3 text-center" style="color: #1f196c;"><%= product.name %></h3>
+          <p class="text-center" style="color: #6b188c; font-weight: bold;"><%= number_to_currency(product.price) %></p>
+          <%= link_to 'Переглянути товар', product_path(product), class: "btn btn-primary mt-2", style: "background-color: #6b188c; border-color: #6b188c;" %>
+        </div>
       </div>
     <% end %>
   </div>
 
-  <h2>Нові товари</h2>
-  <div class="products">
-    <% @new_products.each do |product| %>
-      <div class="product">
-        <%= image_tag product.image if product.image.attached? %>
-        <h3><%= product.name %></h3>
-        <p><%= number_to_currency(product.price) %></p>
-      </div>
-    <% end %>
+    <!-- Кнопка "Попередній" -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="prev" style="opacity: 0.8;">
+      <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #6b188c; border-radius: 50%; width: 40px; height: 40px;"></span>
+      <span class="visually-hidden">Попередній</span>
+    </button>
+
+    <!-- Кнопка "Наступний" -->
+    <button class="carousel-control-next" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="next" style="opacity: 0.8;">
+      <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #6b188c; border-radius: 50%; width: 40px; height: 40px;"></span>
+      <span class="visually-hidden">Наступний</span>
+    </button>
   </div>
 
-  <h2>Популярні товари</h2>
-  <div class="products">
-    <% @popular_products.each do |product| %>
-      <div class="product">
-        <%= image_tag product.image if product.image.attached? %>
-        <h3><%= product.name %></h3>
-        <p><%= number_to_currency(product.price) %></p>
-      </div>
-    <% end %>
-  </div>
-</div>
+<% else %>
+  <p class="text-center mt-5" style="color: #1f196c;">Наразі немає акційних товарів.</p>
+<% end %>
 
-<section>
-  <h2>Про нас</h2>
-  <p>Ми пропонуємо найкращі товари за найвигіднішими цінами. Наші переваги:</p>
-  <ul>
+<!-- Про нас -->
+<section class="mt-5 py-4" style="background-color: #daf4ce;">
+  <h2 class="text-center" style="color: #6b188c;">Про нас</h2>
+  <p class="text-center" style="color: #1f196c;">
+    Ми пропонуємо найкращі товари за найвигіднішими цінами. Наші переваги:
+  </p>
+  <ul class="text-center" style="color: #1f196c; list-style-type: none;">
     <li>Висока якість продукції</li>
     <li>Швидка доставка</li>
     <li>Вигідні ціни</li>

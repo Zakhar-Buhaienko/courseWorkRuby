@@ -86,12 +86,12 @@
           </div>
         <% end %>
       </div>
-
-      <!-- Кнопка для додавання товару в кінці -->
-      <div class="d-flex justify-content-center mt-4">
-        <%= link_to 'Додати товар', new_product_path, class: 'product-btn add-product-btn' %>
-      </div>
-
+      <% if user_signed_in? && current_user.admin? %>
+        <!-- Кнопка для додавання товару в кінці -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= link_to 'Додати товар', new_product_path, class: 'product-btn add-product-btn' %>
+        </div>
+      <% end %>
     </div>
 
     <!-- Bootstrap JS -->
