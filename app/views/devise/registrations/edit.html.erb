@@ -12,7 +12,7 @@
       <ul class="list-group">
         <% current_user.orders.each do |order| %>
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            Замовлення №<%= order.id %> — <%= number_to_currency(order.total_price) %>
+            Замовлення №<%= order.id %> — <%= number_to_currency(order.total_price, format: "%n грн") %>
             <a href="<%= order_path(order) %>" class="btn btn-sm btn-primary" style="background-color: #6b188c; border-color: #8918db;">Переглянути</a>
           </li>
         <% end %>
@@ -22,6 +22,32 @@
     <% end %>
   </div>
 </div>
+
+<% if user_signed_in? && current_user.admin? %>
+  <div class="feedback-section my-4 p-4 rounded" style="background-color: #daf4ce; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    <h3 style="color: #6b188c;">Повідомлення зворотного зв'язку</h3>
+    <% if @contact_messages.present? %>
+      <ul class="list-group mt-3">
+        <% @contact_messages.each do |message| %>
+          <li class="list-group-item p-3" style="border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; background-color: #ffffff;">
+            <div class="d-flex justify-content-between align-items-center" style="color: #6b188c;">
+              <div>
+                <strong>Від:</strong> <%= message.name %> (<%= message.email %>)
+              </div>
+            </div>
+            <div class="message-body mt-2" style="font-size: 0.9rem; color: #333;">
+              <p style="margin: 0;"><%= message.message %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p style="color: #1f196c;">Немає нових повідомлень.</p>
+    <% end %>
+  </div>
+<% end %>
+
+
 
 <h2 class="text-center" style="color: #1f196c;">Редагувати профіль</h2>
 

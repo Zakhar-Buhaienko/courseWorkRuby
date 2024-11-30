@@ -64,6 +64,7 @@
       <div class="container text-center">
         <p>&copy; 2024 Бугаєнко Захар Тарасович ІП-21-3. Всі права захищені.</p>
       </div>
+      <%= link_to 'Зворотній звязок', contact_path, class: 'nav-link  btn-outline-light mx-2 px-4 py-2 rounded-pill' if user_signed_in? %>
     </footer>
 
     <!-- JavaScript для Bootstrap -->
